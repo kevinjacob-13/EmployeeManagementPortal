@@ -31,6 +31,7 @@ namespace DotNetAssignment.DomainModels
         public DateTime? DateOfBirth { get; set; }
         public string Address { get; set; }
         public int ProjectID { get; set; } // reporting to
+        public string ImageUrl { get; set; }
 
 
         [ForeignKey("RoleID")]

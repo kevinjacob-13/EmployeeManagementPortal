@@ -244,6 +244,10 @@
     <Compile Include="Migrations\202109291002127_BasicTables.designer.cs">
       <DependentUpon>202109291002127_BasicTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109300654309_ImageUrlAddition.cs" />
+    <Compile Include="Migrations\202109300654309_ImageUrlAddition.designer.cs">
+      <DependentUpon>202109300654309_ImageUrlAddition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -253,6 +257,7 @@
     <Content Include="Views\Shared\LayoutPage1.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Views\Shared\ImageUpload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -274,6 +279,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202109291002127_BasicTables.resx">
       <DependentUpon>202109291002127_BasicTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109300654309_ImageUrlAddition.resx">
+      <DependentUpon>202109300654309_ImageUrlAddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
