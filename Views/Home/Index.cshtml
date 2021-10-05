@@ -3,6 +3,14 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/LayoutPage1.cshtml";
 }
+@if (Session["CurrentUserName"] == null)
+{
+    <a href="/Account/Login">Login</a>
+}
 
-<h2>Index Page Demo</h2>
+@if (Session["CurrentUserName"] != null)
+{
+    <h2>Welcome,</h2>
+    <h3>User</h3>
+}
 
