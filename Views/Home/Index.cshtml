@@ -5,12 +5,15 @@
 }
 @if (Session["CurrentUserName"] == null)
 {
-    <a href="/Account/Login">Login</a>
+    <a class="btn btn-success" href="/Account/Login">Login</a>
 }
 
 @if (Session["CurrentUserName"] != null)
 {
     <h2>Welcome,</h2>
-    <h3>User</h3>
+    <h3>@Session["CurrentUserName"]</h3>
+    <a class="btn btn-info" href="/account/changeprofile">Change Profile</a>
+    <a class="btn btn-info" href="/account/changepassword">Change Password</a>
+    <a class="btn btn-danger" href="/account/logout">Logout</a>
 }
 
