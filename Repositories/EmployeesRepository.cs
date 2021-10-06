@@ -9,13 +9,13 @@ namespace DotNetAssignment.Repositories
     public interface IEmployeesRepository
     {
         //void InsertUser(User u);
-        //void UpdateUserDetails(User u);
-        //void UpdateUserPassword(User u);
+        void UpdateUserDetails(Employee u);
+        void UpdateUserPassword(Employee u);
         //void DeleteUser(int uid);
         //List<User> GetUsers();
         List<Employee> GetUsersByEmailAndPassword(string Email, string Password);
         //List<User> GetUsersByEmail(string Email);
-        //List<User> GetUsersByUserID(int UserID);
+        List<Employee> GetUsersByEmpID(int EmpID);
         //int GetLatestUserID();
     }
     public class EmployeesRepository : IEmployeesRepository
@@ -33,26 +33,28 @@ namespace DotNetAssignment.Repositories
         //    db.SaveChanges();
         //}
 
-        //public void UpdateUserDetails(User u)
-        //{
-        //    User us = db.Users.Where(temp => temp.UserID == u.UserID).FirstOrDefault();
-        //    if (us != null)
-        //    {
-        //        us.Name = u.Name;
-        //        us.Mobile = u.Mobile;
-        //        db.SaveChanges();
-        //    }
-        //}
+        public void UpdateUserDetails(Employee u)
+        {
+            Employee us = db.Employees.Where(temp => temp.EmpID == u.EmpID).FirstOrDefault();
+            if (us != null)
+            {
+                us.Address = u.Address;
+                us.Mobile = u.Mobile;
+                us.ImageUrl = u.ImageUrl;
 
-        //public void UpdateUserPassword(User u)
-        //{
-        //    User us = db.Users.Where(temp => temp.UserID == u.UserID).FirstOrDefault();
-        //    if (us != null)
-        //    {
-        //        us.PasswordHash = u.PasswordHash;
-        //        db.SaveChanges();
-        //    }
-        //}
+                db.SaveChanges();
+            }
+        }
+
+        public void UpdateUserPassword(Employee u)
+        {
+            Employee us = db.Employees.Where(temp => temp.EmpID == u.EmpID).FirstOrDefault();
+            if (us != null)
+            {
+                us.PasswordHash = u.PasswordHash;
+                db.SaveChanges();
+            }
+        }
 
         //public void DeleteUser(int uid)
         //{
@@ -82,11 +84,11 @@ namespace DotNetAssignment.Repositories
         //    return us;
         //}
 
-        //public List<User> GetUsersByUserID(int UserID)
-        //{
-        //    List<User> us = db.Users.Where(temp => temp.UserID == UserID).ToList();
-        //    return us;
-        //}
+        public List<Employee> GetUsersByEmpID(int EmpID)
+        {
+            List<Employee> us = db.Employees.Where(temp => temp.EmpID == EmpID).ToList();
+            return us;
+        }
 
         //public int GetLatestUserID()
         //{

@@ -78,6 +78,9 @@
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -262,6 +265,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomFilters\UserAuthorizationFilterAttribute.cs" />
     <Compile Include="DomainModels\Employee.cs" />
     <Compile Include="DomainModels\Leave.cs" />
     <Compile Include="DomainModels\PortalDbContext.cs" />
@@ -281,8 +285,11 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmployeesRepository.cs" />
+    <Compile Include="ServiceLayer\MapperExtensions.cs" />
     <Compile Include="ServiceLayer\SHA256HashGenerator.cs" />
     <Compile Include="ServiceLayer\EmployeeService.cs" />
+    <Compile Include="ViewModels\EditEmployeeDetailsViewModel.cs" />
+    <Compile Include="ViewModels\EditPasswordViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
   </ItemGroup>
@@ -294,6 +301,8 @@
     <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Views\Shared\ImageUpload.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangeProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

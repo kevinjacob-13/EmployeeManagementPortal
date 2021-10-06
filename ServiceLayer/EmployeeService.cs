@@ -12,13 +12,13 @@ namespace DotNetAssignment.ServiceLayer
     public interface IEmployeesService
     {
  //       int InsertUser(RegisterViewModel uvm);
- //       void UpdateUserDetails(EditUserDetailsViewModel uvm);
-//        void UpdateUserPassword(EditUserPasswordViewModel uvm);
+        void UpdateUserDetails(EditEmployeeDetailsViewModel uvm);
+        void UpdateUserPassword(EditPasswordViewModel uvm);
 //        void DeleteUser(int uid);
 //       List<UserViewModel> GetUsers();
         UserViewModel GetUsersByEmailAndPassword(string Email, string Password);
         //UserViewModel GetUsersByEmail(string Email);
-        //UserViewModel GetUsersByUserID(int UserID);
+        UserViewModel GetUsersByEmpID(int EmpID);
     }
     public class EmployeeService : IEmployeesService
     {
@@ -40,22 +40,22 @@ namespace DotNetAssignment.ServiceLayer
         //    return uid;
         //}
 
-        //public void UpdateUserDetails(EditUserDetailsViewModel uvm)
-        //{
-        //    var config = new MapperConfiguration(cfg => { cfg.CreateMap<EditUserDetailsViewModel, User>(); cfg.IgnoreUnmapped(); });
-        //    IMapper mapper = config.CreateMapper();
-        //    User u = mapper.Map<EditUserDetailsViewModel, User>(uvm);
-        //    ur.UpdateUserDetails(u);
-        //}
+        public void UpdateUserDetails(EditEmployeeDetailsViewModel uvm)
+        {
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<EditEmployeeDetailsViewModel, Employee>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            Employee u = mapper.Map<EditEmployeeDetailsViewModel, Employee>(uvm);
+            ur.UpdateUserDetails(u);
+        }
 
-        //public void UpdateUserPassword(EditUserPasswordViewModel uvm)
-        //{
-        //    var config = new MapperConfiguration(cfg => { cfg.CreateMap<EditUserPasswordViewModel, User>(); cfg.IgnoreUnmapped(); });
-        //    IMapper mapper = config.CreateMapper();
-        //    User u = mapper.Map<EditUserPasswordViewModel, User>(uvm);
-        //    u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
-        //    ur.UpdateUserPassword(u);
-        //}
+        public void UpdateUserPassword(EditPasswordViewModel uvm)
+        {
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<EditPasswordViewModel, Employee>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            Employee u = mapper.Map<EditPasswordViewModel, Employee>(uvm);
+            u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
+            ur.UpdateUserPassword(u);
+        }
 
         //public void DeleteUser(int uid)
         //{
@@ -77,7 +77,7 @@ namespace DotNetAssignment.ServiceLayer
             UserViewModel uvm = null;
             if (u != null)
             {
-                var config = new MapperConfiguration(cfg => { cfg.CreateMap<Employee, UserViewModel>();});
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<Employee, UserViewModel>(); cfg.IgnoreUnmapped(); });
                 IMapper mapper = config.CreateMapper();
                 uvm = mapper.Map<Employee, UserViewModel>(u);
             }
@@ -97,18 +97,18 @@ namespace DotNetAssignment.ServiceLayer
         //    return uvm;
         //}
 
-        //public UserViewModel GetUsersByUserID(int UserID)
-        //{
-        //    User u = ur.GetUsersByUserID(UserID).FirstOrDefault();
-        //    UserViewModel uvm = null;
-        //    if (u != null)
-        //    {
-        //        var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
-        //        IMapper mapper = config.CreateMapper();
-        //        uvm = mapper.Map<User, UserViewModel>(u);
-        //    }
-        //    return uvm;
-        //}
+        public UserViewModel GetUsersByEmpID(int UserID)
+        {
+            Employee u = ur.GetUsersByEmpID(UserID).FirstOrDefault();
+            UserViewModel uvm = null;
+            if (u != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<Employee, UserViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                uvm = mapper.Map<Employee, UserViewModel>(u);
+            }
+            return uvm;
+        }
     }
 }
 
