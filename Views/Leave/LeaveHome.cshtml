@@ -1,0 +1,43 @@
+﻿@model List<DotNetAssignment.ViewModels.LeaveViewModel>
+
+@{
+    ViewBag.Title = "LeaveHome";
+    Layout = "~/Views/Shared/LayoutPage1.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Leave Requests</h1>
+        @foreach (var item in Model)
+        {
+    <div class="row">
+        <form action="/leave/LeaveDelete" method="post">
+            @Html.AntiForgeryToken()
+            <div>
+                Leave ID: @item.LeaveID
+            </div>
+            <div>
+                Emp ID: @item.EmpID
+            </div>
+            <div>
+                Start Date: @item.StartDate
+            </div>
+            <div>
+                End Date: @item.EndDate
+            </div>
+            <div>
+                Leave Type: @item.LeaveType
+            </div>
+            <div>
+                Leave Reason: @item.LeaveReason
+            </div>
+            <div>
+                Leave Status: @item.LeaveStatus
+            </div>
+            <input type="hidden" name="LeaveID" value="@item.LeaveID" />
+            <button type="submit" class="btn btn-danger">Delete</button> 
+        </form>
+    </div>
+        }
+    </div>
+</div>

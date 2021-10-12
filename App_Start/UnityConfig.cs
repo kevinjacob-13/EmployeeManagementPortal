@@ -17,6 +17,7 @@ namespace DotNetAssignment
             // it is NOT necessary to register your controllers
             
             container.RegisterType<IEmployeesService, EmployeeService>();
+            container.RegisterType<ILeavesService, LeaveService>();
             DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
         }

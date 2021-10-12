@@ -12,8 +12,14 @@
 {
     <h2>Welcome,</h2>
     <h3>@Session["CurrentUserName"]</h3>
-    <a class="btn btn-info" href="/account/changeprofile">Change Profile</a>
-    <a class="btn btn-info" href="/account/changepassword">Change Password</a>
-    <a class="btn btn-danger" href="/account/logout">Logout</a>
+    <div class="row">
+        <a class="btn btn-info" href="/account/changeprofile">Change Profile</a>
+        <a class="btn btn-info" href="/account/changepassword">Change Password</a>
+        <a class="btn btn-danger" href="/account/logout">Logout</a>
+    </div>
+    <div class="row">
+        <a class="btn btn-primary" href="/leave/create">Request Leave</a>
+        <a class="btn btn-primary" href="/leave/LeaveHome">Leave Requests</a>
+    </div>
 }
 
