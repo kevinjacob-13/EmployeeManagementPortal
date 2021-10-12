@@ -265,6 +265,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="CustomFilters\UserAuthorizationFilterAttribute.cs" />
     <Compile Include="DomainModels\Employee.cs" />
     <Compile Include="DomainModels\Leave.cs" />
@@ -282,14 +283,21 @@
     <Compile Include="Migrations\202109300654309_ImageUrlAddition.designer.cs">
       <DependentUpon>202109300654309_ImageUrlAddition.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110070421169_leave_updated.cs" />
+    <Compile Include="Migrations\202110070421169_leave_updated.designer.cs">
+      <DependentUpon>202110070421169_leave_updated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmployeesRepository.cs" />
+    <Compile Include="Repositories\LeaveRepository.cs" />
+    <Compile Include="ServiceLayer\LeaveService.cs" />
     <Compile Include="ServiceLayer\MapperExtensions.cs" />
     <Compile Include="ServiceLayer\SHA256HashGenerator.cs" />
     <Compile Include="ServiceLayer\EmployeeService.cs" />
     <Compile Include="ViewModels\EditEmployeeDetailsViewModel.cs" />
     <Compile Include="ViewModels\EditPasswordViewModel.cs" />
+    <Compile Include="ViewModels\LeaveViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
   </ItemGroup>
@@ -303,6 +311,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\ChangeProfile.cshtml" />
+    <Content Include="Views\Leave\Create.cshtml" />
+    <Content Include="Views\Leave\LeaveHome.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -326,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109300654309_ImageUrlAddition.resx">
       <DependentUpon>202109300654309_ImageUrlAddition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110070421169_leave_updated.resx">
+      <DependentUpon>202110070421169_leave_updated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
