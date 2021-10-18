@@ -30,15 +30,16 @@ namespace DotNetAssignment.DomainModels
         public int RoleID { get; set; } //create table for role
         public DateTime? DateOfBirth { get; set; }
         public string Address { get; set; }
-        public int ProjectID { get; set; } // reporting to
+        public int ProjectID { get; set; }
+        public int ProjectManagerID { get; set; } // reporting to
         public string ImageUrl { get; set; }
+        public bool IsSpecialPermission { get; set; }
+        public bool IsHR { get; set; }
 
 
         [ForeignKey("RoleID")]
         public virtual Role RID { get; set; }
 
-        [ForeignKey("ProjectID")]
-        public virtual Project PID { get; set; }
 
     }
 }

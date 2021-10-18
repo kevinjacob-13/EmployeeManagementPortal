@@ -19,9 +19,11 @@ namespace DotNetAssignment.DomainModels
         public string LeaveStatus { get; set; }
         public string LeaveType { get; set; }
         public int? ApprovedByID { get; set; }
+        public int ProjectManagerID { get; set; }
 
         [ForeignKey("EmpID")]
         public virtual Employee EMP { get; set; }
+
 
     }
 }

@@ -36,12 +36,19 @@ namespace DotNetAssignment.Controllers
             if (ModelState.IsValid)
             {
                 UserViewModel uvm = this.us.GetUsersByEmailAndPassword(lvm.Email, lvm.Password);
+                RoleViewModel rvm = this.us.GetRoleInformationByRoleID(uvm.RoleID);
                 if (uvm != null)
                 {
                     Session["CurrentUserID"] = uvm.EmpID;
                     Session["CurrentUserName"] = uvm.FirstName+" "+uvm.LastName;
                     Session["CurrentUserEmail"] = uvm.Email;
                     Session["CurrentUserPassword"] = uvm.Password;
+                    Session["CurrentProjectManager"] = uvm.ProjectManagerID;
+                    Session["SpecialPermissionStatus"] = uvm.IsSpecialPermission;
+                    Session["IsHR"] = uvm.IsHR;
+                    Session["CurrentRoleName"] = rvm.RoleName;
+                    Session["HRStatus"] = rvm.IsHR;
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -73,6 +80,44 @@ namespace DotNetAssignment.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HRAuthorizationFilter]
+        public ActionResult CreateProfile(UserViewModel uvm)
+        {
+            if (ModelState.IsValid)
+            {
+                if (uvm.RoleID == 5)
+                {
+                    uvm.IsHR = true;
+                }
+                else
+                {
+                    uvm.IsHR = false;
+                }
+                PortalDbContext db = new PortalDbContext();
+                List<Project> p = db.Projects.Where(temp => temp.ProjectID == uvm.ProjectID).ToList();
+                int pmid = Convert.ToInt32(p[0].ProjectManagerID);
+                //Select(temp => temp.ProjectManagerID).
+                uvm.ProjectManagerID = pmid;
+                uvm.Password = uvm.FirstName + uvm.Mobile;
+                this.us.InsertUser(uvm);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("x", "Invalid data");
+                return RedirectToAction("CreateProfile", "Account");
+            }
+        }
+
+        [HRAuthorizationFilter]
+        public ActionResult CreateProfile()
+        {
+            UserViewModel uvm = new UserViewModel();
+            return View(uvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [UserAuthorizationFilterAttribute]
         public ActionResult ChangePassword(EditPasswordViewModel eupvm)
         {
@@ -87,6 +132,60 @@ namespace DotNetAssignment.Controllers
                 ModelState.AddModelError("x", "Invalid data");
                 return View(eupvm);
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HRAuthorizationFilter]
+        public ActionResult EditProfileByHR(UserViewModel uvm)
+        {
+            if (ModelState.IsValid)
+            {
+                //this.us.UpdateUserPassword(uvm);
+                if (uvm.RoleID == 5)
+                {
+                    uvm.IsHR = true;
+                }
+                else
+                {
+                    uvm.IsHR = false;
+                }
+                uvm.EmpID = Convert.ToInt32(Session["SearchEmpID"]);
+                this.us.UpdateUserDetails(uvm);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("x", "Invalid data");
+                return View(uvm);
+            }
+        }
+
+        [HRAuthorizationFilter]
+        public ActionResult EditProfileByHR()
+        {
+            int id = Convert.ToInt32(TempData["EmpIDQuery"]);
+            UserViewModel uvm = this.us.GetUsersByEmpID(id);
+            Session["SearchEmpID"] = uvm.EmpID;
+            //ViewBag.Password = uvm.Password;
+            return View(uvm);
+        }
+
+        [HttpPost]
+        [HRAuthorizationFilter]
+        public ActionResult EditProfileByEMPID(string EmpID)
+        {
+            int uid = Convert.ToInt32(EmpID);
+            //UserViewModel uvm = this.us.GetUsersByEmpID(uid);
+            //return View(uvm);
+            TempData["EmpIDQuery"] = uid;
+            return RedirectToAction("EditProfileByHR", "Account");
+        }
+
+        [HRAuthorizationFilter]
+        public ActionResult EditProfileByEMPID()
+        {
+            return View();
         }
 
         [UserAuthorizationFilterAttribute]
