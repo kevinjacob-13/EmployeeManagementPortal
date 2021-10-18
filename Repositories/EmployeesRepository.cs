@@ -8,8 +8,9 @@ namespace DotNetAssignment.Repositories
 {
     public interface IEmployeesRepository
     {
-        //void InsertUser(User u);
+        void InsertUser(Employee u);
         void UpdateUserDetails(Employee u);
+        void UpdateFullUserDetails(Employee u);
         void UpdateUserPassword(Employee u);
         //void DeleteUser(int uid);
         //List<User> GetUsers();
@@ -17,6 +18,7 @@ namespace DotNetAssignment.Repositories
         //List<User> GetUsersByEmail(string Email);
         List<Employee> GetUsersByEmpID(int EmpID);
         //int GetLatestUserID();
+        List<Role> GetRoleInformationByRoleID(int RoleID);
     }
     public class EmployeesRepository : IEmployeesRepository
     {
@@ -27,11 +29,11 @@ namespace DotNetAssignment.Repositories
             db = new PortalDbContext();
         }
 
-        //public void InsertUser(User u)
-        //{
-        //    db.Users.Add(u);
-        //    db.SaveChanges();
-        //}
+        public void InsertUser(Employee u)
+        {
+            db.Employees.Add(u);
+            db.SaveChanges();
+        }
 
         public void UpdateUserDetails(Employee u)
         {
@@ -41,6 +43,26 @@ namespace DotNetAssignment.Repositories
                 us.Address = u.Address;
                 us.Mobile = u.Mobile;
                 us.ImageUrl = u.ImageUrl;
+
+                db.SaveChanges();
+            }
+        }
+
+        public void UpdateFullUserDetails(Employee u)
+        {
+            Employee us = db.Employees.Where(temp => temp.EmpID == u.EmpID).FirstOrDefault();
+            if (us != null)
+            {
+                us.FirstName = u.FirstName;
+                us.LastName = u.LastName;
+                us.Email = u.Email;
+                us.DateOfBirth = u.DateOfBirth;
+                us.IsHR = u.IsHR;
+                us.IsSpecialPermission = u.IsSpecialPermission;
+                us.Address = u.Address;
+                us.Mobile = u.Mobile;
+                us.ProjectID = u.ProjectID;
+                us.ProjectManagerID = u.ProjectManagerID;
 
                 db.SaveChanges();
             }
@@ -78,11 +100,7 @@ namespace DotNetAssignment.Repositories
             return us;
         }
 
-        //public List<User> GetUsersByEmail(string Email)
-        //{
-        //    List<User> us = db.Users.Where(temp => temp.Email == Email).ToList();
-        //    return us;
-        //}
+
 
         public List<Employee> GetUsersByEmpID(int EmpID)
         {
@@ -95,5 +113,11 @@ namespace DotNetAssignment.Repositories
         //    int uid = db.Users.Select(temp => temp.UserID).Max();
         //    return uid;
         //}
-    }
+
+        public List<Role> GetRoleInformationByRoleID(int RoleID)
+        {
+            List<Role> ur = db.Roles.Where(temp => temp.RoleID == RoleID).ToList();
+            return ur;
+        }
+}
 }

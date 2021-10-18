@@ -12,14 +12,25 @@
 {
     <h2>Welcome,</h2>
     <h3>@Session["CurrentUserName"]</h3>
-    <div class="row">
+    <div class="form-row">
         <a class="btn btn-info" href="/account/changeprofile">Change Profile</a>
         <a class="btn btn-info" href="/account/changepassword">Change Password</a>
         <a class="btn btn-danger" href="/account/logout">Logout</a>
     </div>
-    <div class="row">
+    <div class="form-row">
         <a class="btn btn-primary" href="/leave/create">Request Leave</a>
         <a class="btn btn-primary" href="/leave/LeaveHome">Leave Requests</a>
+        @if (Session["SpecialPermissionStatus"] is true)
+        {
+            <a class="btn btn-info" href="/leave/LeaveApproval">View Pending Leave Requests</a>
+        }
+    </div>
+    <div class="form-row">
+        @if (Session["IsHR"] is true)
+        {
+            <a class="btn btn-info" href="/account/CreateProfile">Create New Employee Profile</a>
+            <a class="btn btn-info" href="/account/EditProfileByEMPID">Edit Employee Profile</a>
+        }
     </div>
 }
 

@@ -15,7 +15,10 @@ namespace DotNetAssignment.ViewModels
         public int RoleID { get; set; } 
         public DateTime? DateOfBirth { get; set; }
         public string Address { get; set; }
-        public int ProjectID { get; set; } 
+        public int ProjectID { get; set; }
+        public int ProjectManagerID { get; set; }
+        public bool IsSpecialPermission { get; set; }
+        public bool IsHR { get; set; }
         public string ImageUrl { get; set; }
     }
 }

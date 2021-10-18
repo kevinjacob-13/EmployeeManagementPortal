@@ -11,14 +11,16 @@ namespace DotNetAssignment.ServiceLayer
 {
     public interface IEmployeesService
     {
- //       int InsertUser(RegisterViewModel uvm);
+        void InsertUser(UserViewModel uvm);
         void UpdateUserDetails(EditEmployeeDetailsViewModel uvm);
+        void UpdateUserDetails(UserViewModel uvm);
         void UpdateUserPassword(EditPasswordViewModel uvm);
 //        void DeleteUser(int uid);
 //       List<UserViewModel> GetUsers();
         UserViewModel GetUsersByEmailAndPassword(string Email, string Password);
         //UserViewModel GetUsersByEmail(string Email);
         UserViewModel GetUsersByEmpID(int EmpID);
+        RoleViewModel GetRoleInformationByRoleID(int RoleID);
     }
     public class EmployeeService : IEmployeesService
     {
@@ -29,16 +31,14 @@ namespace DotNetAssignment.ServiceLayer
             ur = new EmployeesRepository();
         }
 
-        //public int InsertUser(RegisterViewModel uvm)
-        //{
-        //    var config = new MapperConfiguration(cfg => { cfg.CreateMap<RegisterViewModel, User>(); cfg.IgnoreUnmapped(); });
-        //    IMapper mapper = config.CreateMapper();
-        //    User u = mapper.Map<RegisterViewModel, User>(uvm);
-        //    u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
-        //    ur.InsertUser(u);
-        //    int uid = ur.GetLatestUserID();
-        //    return uid;
-        //}
+        public void InsertUser(UserViewModel uvm)
+        {
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<UserViewModel, Employee>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            Employee u = mapper.Map<UserViewModel, Employee>(uvm);
+            u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
+            ur.InsertUser(u);
+        }
 
         public void UpdateUserDetails(EditEmployeeDetailsViewModel uvm)
         {
@@ -46,6 +46,14 @@ namespace DotNetAssignment.ServiceLayer
             IMapper mapper = config.CreateMapper();
             Employee u = mapper.Map<EditEmployeeDetailsViewModel, Employee>(uvm);
             ur.UpdateUserDetails(u);
+        }
+
+        public void UpdateUserDetails(UserViewModel uvm)
+        {
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<UserViewModel, Employee>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            Employee u = mapper.Map<UserViewModel, Employee>(uvm);
+            ur.UpdateFullUserDetails(u);
         }
 
         public void UpdateUserPassword(EditPasswordViewModel uvm)
@@ -84,18 +92,18 @@ namespace DotNetAssignment.ServiceLayer
             return uvm;
         }
 
-        //public UserViewModel GetUsersByEmail(string Email)
-        //{
-        //    User u = ur.GetUsersByEmail(Email).FirstOrDefault();
-        //    UserViewModel uvm = null;
-        //    if (u != null)
-        //    {
-        //        var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
-        //        IMapper mapper = config.CreateMapper();
-        //        uvm = mapper.Map<User, UserViewModel>(u);
-        //    }
-        //    return uvm;
-        //}
+        public RoleViewModel GetRoleInformationByRoleID(int RoleID)
+        {
+            Role r = ur.GetRoleInformationByRoleID(RoleID).FirstOrDefault();
+            RoleViewModel rvm = null;
+            if (r != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<Role, RoleViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                rvm = mapper.Map<Role, RoleViewModel>(r);
+            }
+            return rvm;
+        }
 
         public UserViewModel GetUsersByEmpID(int UserID)
         {

@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using DotNetAssignment.ViewModels;
 using DotNetAssignment.ServiceLayer;
 using DotNetAssignment.CustomFilters;
+using System.Net.Mail;
+using System.Net;
 
 namespace DotNetAssignment.Controllers
 {
@@ -17,6 +19,37 @@ namespace DotNetAssignment.Controllers
         {
             this.us = us;
             this.ls = ls;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [LeaveApprovalAuthorization]
+        public ActionResult UpdateLeaveApproval(int LeaveID)
+        {
+            var LeaveStatus = "Approved";
+            this.ls.UpdateLeave(LeaveID,LeaveStatus);
+            return RedirectToAction("LeaveApproval", "Leave");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [LeaveApprovalAuthorization]
+        public ActionResult UpdateLeaveRejection(int LeaveID)
+        {
+            var LeaveStatus = "Rejected";
+            this.ls.UpdateLeave(LeaveID, LeaveStatus);
+            return RedirectToAction("LeaveApproval", "Leave");
+        }
+
+        [LeaveApprovalAuthorization]
+        public ActionResult LeaveApproval()
+        {
+            int uid = Convert.ToInt32(Session["CurrentUserID"]);
+            List<LeaveViewModel> leavelist = this.ls.GetLeavesByPMID(uid);
+            List<string> LeaveStatus = new List<string>() { "Approved", "Rejected" };
+            ViewBag.LeaveStatus = LeaveStatus;
+            ViewBag.Email = Session["CurrentUserEmail"];
+            return View(leavelist);
         }
 
         [HttpPost]
@@ -54,6 +87,7 @@ namespace DotNetAssignment.Controllers
             {
                 levm.LeaveStatus = "Pending";
                 levm.EmpID = Convert.ToInt32(Session["CurrentUserID"]);
+                levm.ProjectManagerID = Convert.ToInt32(Session["CurrentProjectManager"]);               
                 this.ls.InsertLeave(levm);
                 return RedirectToAction("Index", "Home");
             }

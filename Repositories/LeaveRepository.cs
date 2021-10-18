@@ -9,11 +9,12 @@ namespace DotNetAssignment.Repositories
     public interface ILeaveRepository
     {
         void InsertLeave(Leave l);
-//        void UpdateLeaveDetails(Leave l);
+        void UpdateLeave(int LeaveID, string LeaveStatus);
         void DeleteLeave(int LeaveID);
         List<Leave> GetLeaves();
         List<Leave> GetLeaveByLeaveID(int LeaveID);
         List<Leave> GetLeavesByEmpID(int EmpID);
+        List<Leave> GetLeavesByPMID(int PMID);
     }
     public class LeaveRepository : ILeaveRepository
     {
@@ -30,17 +31,15 @@ namespace DotNetAssignment.Repositories
             db.SaveChanges();
         }
 
-        //public void UpdateLeaveDetails(Leave l)
-        //{
-        //    Leave qt = db.Leaves.Where(temp => temp.LeaveID == l.LeaveID).FirstOrDefault();
-        //    if (qt != null)
-        //    {
-        //        qt.QuestionName = q.QuestionName;
-        //        qt.QuestionDateAndTime = q.QuestionDateAndTime;
-        //        qt.CategoryID = q.CategoryID;
-        //        db.SaveChanges();
-        //    }
-        //}
+        public void UpdateLeave(int LeaveID, string LeaveStatus)
+        {
+            Leave qt = db.Leaves.Where(temp => temp.LeaveID == LeaveID).FirstOrDefault();
+            if (qt != null)
+            {
+                qt.LeaveStatus = LeaveStatus;
+                db.SaveChanges();
+            }
+        }
 
         public void DeleteLeave(int LeaveID)
         {
@@ -66,6 +65,11 @@ namespace DotNetAssignment.Repositories
         public List<Leave> GetLeavesByEmpID(int EmpID)
         {
             List<Leave> lv = db.Leaves.Where(temp => temp.EmpID == EmpID).ToList();
+            return lv;
+        }
+        public List<Leave> GetLeavesByPMID(int PMID)
+        {
+            List<Leave> lv = db.Leaves.Where(temp => temp.ProjectManagerID == PMID && temp.LeaveStatus == "Pending").ToList();
             return lv;
         }
     }

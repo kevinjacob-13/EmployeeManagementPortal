@@ -1,0 +1,56 @@
+﻿@model List<DotNetAssignment.ViewModels.LeaveViewModel>
+
+@{
+    ViewBag.Title = "LeaveApproval";
+    Layout = "~/Views/Shared/LayoutPage1.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Leave Requests</h1>
+        @foreach (var item in Model)
+        {
+    <div class="container-fluid">
+        <div class="row">
+            Leave ID: @item.LeaveID
+        </div>
+        <div class="row">
+            Emp ID: @item.EmpID
+        </div>
+        <div class="row">
+            Start Date: @item.StartDate
+        </div>
+        <div class="row">
+            End Date: @item.EndDate
+        </div>
+
+        <div class="row">
+            Leave Type: @item.LeaveType
+        </div>
+        <div class="row">
+            Leave Reason: @item.LeaveReason
+        </div>
+        <form action="/leave/UpdateLeaveApproval" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="LeaveID" value="@item.LeaveID" />
+            <div class="row">
+                <button type="submit" class="btn btn-success">Approve</button>
+            </div>
+
+        </form>
+        <form action="/leave/UpdateLeaveRejection" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="LeaveID" value="@item.LeaveID" />
+            <div class="row">
+                <button type="submit" class="btn btn-danger">Reject</button>
+            </div>
+
+        </form>
+        <a href="mailto:?subject=Leave Situation">Email Employee</a>
+    </div>
+    }
+</div>
+</div>
+

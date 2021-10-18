@@ -15,6 +15,7 @@ namespace DotNetAssignment.ViewModels
         public string LeaveStatus { get; set; }
         public string LeaveType { get; set; }
         public int? ApprovedByID { get; set; }
+        public int ProjectManagerID { get; set; }
 
         public UserViewModel Employee { get; set; }
     }
